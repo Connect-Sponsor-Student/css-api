@@ -1,13 +1,17 @@
+using CSS.Application.Utilities.TokenUtilities;
 using CSS.Infrastructure;
 using CSS.Infrastructure.Data;
 using CSS.WebAPI;
+using CSS.WebAPI.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 // Add services to the container.
 builder.Services.AddInfrastructureServices(builder.Configuration.GetConnectionString("DefaultConnection")!);
 builder.Services.AddWebAPIServices();
+builder.AddCSSAuthentication();
 
 var app = builder.Build();
 
@@ -20,6 +24,7 @@ if (app.Environment.IsDevelopment())
 ApplyMigration();
 app.UseHttpsRedirection();
 
+app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

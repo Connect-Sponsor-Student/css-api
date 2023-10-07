@@ -14,4 +14,5 @@ public interface IUnitOfWork
     public ISponsorRepository SponsorRepository { get; }
     public IStudentRepository StudentRepository { get; }
     public IUserRepository UserRepository { get; }
+    Task<bool> SaveChangesAsync();
 }

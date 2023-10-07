@@ -23,6 +23,12 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Role>().HasData
+        (
+            new Role { RoleName = "Admin" }
+            , new Role { RoleName = "Student" }
+            , new Role { RoleName = "Sponsor" }
+        );
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
 

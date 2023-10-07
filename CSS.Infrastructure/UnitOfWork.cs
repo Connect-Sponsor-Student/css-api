@@ -60,4 +60,7 @@ public class UnitOfWork : IUnitOfWork
     public IStudentRepository StudentRepository => studentRepository;
 
     public IUserRepository UserRepository => userRepository;
+
+    public async Task<bool> SaveChangesAsync()
+        => await _appDbContext.SaveChangesAsync() > 0;
 }

@@ -1,5 +1,8 @@
 using CSS.Application;
+using CSS.Application.Mappers;
 using CSS.Application.Repositories;
+using CSS.Application.Services;
+using CSS.Application.Services.Interfaces;
 using CSS.Infrastructure.Data;
 using CSS.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +18,7 @@ public static class DependencyInjection
         else*/
         services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(dbConnection));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddAutoMapper(typeof(MapperConfigurationProfile).Assembly);
         #region  DI REPO
         services.AddScoped<IAdminRepository, AdminRepository>()
                 .AddScoped<IFeedBackRepository, FeedBackRepository>()
@@ -28,7 +32,12 @@ public static class DependencyInjection
                 .AddScoped<IStudentRepository, StudentRepository>()
                 .AddScoped<IUserRepository, UserRepository>();
         #endregion
-        
+        #region  DI Services 
+        services.AddScoped<IUserService, UserService>()
+                .AddScoped<IRoleService, RoleService>();
+        #endregion
         return services;
     }
+
+    
 }
