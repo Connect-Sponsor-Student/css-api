@@ -1,4 +1,7 @@
+using CSS.Application;
+using CSS.Application.Repositories;
 using CSS.Infrastructure.Data;
+using CSS.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +14,21 @@ public static class DependencyInjection
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("CSS_InMemDb"));
         else*/
         services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(dbConnection));
-
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        #region  DI REPO
+        services.AddScoped<IAdminRepository, AdminRepository>()
+                .AddScoped<IFeedBackRepository, FeedBackRepository>()
+                .AddScoped<IPaymentRepository, PaymentRepository>()
+                .AddScoped<IProposalRepository, ProposalRepository>()
+                .AddScoped<IProposalServiceRespository, ProposalServiceRepository>()
+                .AddScoped<IProposalSponsorRepository, ProposalSponsorRepository>()
+                .AddScoped<IRoleRepository, RoleRepository>()
+                .AddScoped<IServiceRepository, ServiceRepository>()
+                .AddScoped<ISponsorRepository, SponsorRepository>()
+                .AddScoped<IStudentRepository, StudentRepository>()
+                .AddScoped<IUserRepository, UserRepository>();
+        #endregion
+        
         return services;
     }
 }

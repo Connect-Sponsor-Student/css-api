@@ -13,5 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSS.Domains\CSS.Domains.csproj" />
+    <ProjectReference Include="..\CSS.Application\CSS.Application.csproj" />
   </ItemGroup>
 </Project>

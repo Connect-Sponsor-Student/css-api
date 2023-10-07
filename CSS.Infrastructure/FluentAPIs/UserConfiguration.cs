@@ -10,6 +10,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasKey(x => x.Id);
         builder.HasOne(x => x.Role)
                 .WithMany(x => x.Users)
-                .HasForeignKey(x => x.RoleId);
+                .HasForeignKey(x => x.RoleId); 
     }
 }
