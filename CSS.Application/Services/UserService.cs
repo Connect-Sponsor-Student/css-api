@@ -25,6 +25,48 @@ public class UserService : IUserService
         if (isDup) throw new Exception($"Duplicate Email: {model.Email}");
         await _unitOfWork.UserRepository.AddAsync(user);
         user.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
+
+        model.RoleId ??= (await _unitOfWork.RoleRepository.FindByField(x => x.RoleName == "Student")).Id;
+        var role = await _unitOfWork.RoleRepository.GetByIdAsync(model.RoleId.Value);
+        switch (role!.RoleName)
+        {
+            case "Student":
+                var student = new Student
+                {
+                    Address = user.Address,
+                    Email = user.Email,
+                    FullName = user.FullName
+                };
+                user.Id = student.Id;
+                await _unitOfWork.StudentRepository.AddAsync(student);
+                break;
+            case "Admin":
+                var admin = new Admin
+                {
+                    Name = user.FullName,
+                    Email = user.Email,
+                    IsBussinessAdmin = false,
+                };
+                user.EntityId = admin.Id;
+                await _unitOfWork.AdminRepository.AddAsync(admin);
+                break;
+            case "Sponsor":
+                var sponsor = new Sponsor
+                {
+                    Email = user.Email,
+                    Address = user.Address,
+                    Name = user.FullName
+                };
+                await _unitOfWork.SponsorRepository.AddAsync(sponsor);
+                user.EntityId = sponsor.Id;
+                break;
+            default:
+                throw new Exception($"Role is not supported!");
+
+        }
+
+
+
         return await _unitOfWork.SaveChangesAsync()
             ? _mapper.Map<UserViewModel>(await _unitOfWork.UserRepository.GetByIdAsync(user.Id, x => x.Role))
             : throw new Exception($"Save Changes Failed!");
