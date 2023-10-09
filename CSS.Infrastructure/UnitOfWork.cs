@@ -18,10 +18,11 @@ public class UnitOfWork : IUnitOfWork
     private readonly ISponsorRepository sponsorRepository;
     private readonly IStudentRepository studentRepository;
     private readonly IUserRepository userRepository;
+    private readonly IProposalFileRepository _proposalFileRepository;
     public UnitOfWork(AppDbContext dbContext, IAdminRepository adminRepository, IFeedBackRepository feedBackRepositor
     , IPaymentRepository paymentRepository, IProposalRepository proposalRepository, IProposalServiceRespository proposalServiceRespository
     , IProposalSponsorRepository proposalSponsorRepository, IRoleRepository roleRepository, IServiceRepository serviceRepository
-    , ISponsorRepository sponsorRepository, IStudentRepository studentRepository, IUserRepository userRepository)
+    , ISponsorRepository sponsorRepository, IStudentRepository studentRepository, IUserRepository userRepository, IProposalFileRepository proposalFileRepository)
     {
         _appDbContext = dbContext;
         _adminRepository = adminRepository;
@@ -35,6 +36,7 @@ public class UnitOfWork : IUnitOfWork
         this.sponsorRepository = sponsorRepository;
         this.studentRepository = studentRepository;
         this.userRepository = userRepository;
+        _proposalFileRepository = proposalFileRepository;
 
 
 
@@ -60,6 +62,7 @@ public class UnitOfWork : IUnitOfWork
     public IStudentRepository StudentRepository => studentRepository;
 
     public IUserRepository UserRepository => userRepository;
+    public IProposalFileRepository ProposalFileRepository => _proposalFileRepository;
 
     public async Task<bool> SaveChangesAsync()
         => await _appDbContext.SaveChangesAsync() > 0;

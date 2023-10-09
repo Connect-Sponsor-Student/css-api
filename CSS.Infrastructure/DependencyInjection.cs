@@ -30,11 +30,13 @@ public static class DependencyInjection
                 .AddScoped<IServiceRepository, ServiceRepository>()
                 .AddScoped<ISponsorRepository, SponsorRepository>()
                 .AddScoped<IStudentRepository, StudentRepository>()
-                .AddScoped<IUserRepository, UserRepository>();
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IProposalFileRepository, ProposalFileRepository>();
         #endregion
         #region  DI Services 
         services.AddScoped<IUserService, UserService>()
-                .AddScoped<IRoleService, RoleService>();
+                .AddScoped<IRoleService, RoleService>()
+                .AddScoped<IProposalService, ProposalService>();
         #endregion
         return services;
     }

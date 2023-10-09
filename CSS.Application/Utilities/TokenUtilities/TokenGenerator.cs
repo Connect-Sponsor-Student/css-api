@@ -1,8 +1,8 @@
+using CSS.Domains.Entities;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using CSS.Domains.Entities;
-using Microsoft.IdentityModel.Tokens;
 
 namespace CSS.Application.Utilities.TokenUtilities;
 public static class TokenGenerator
@@ -14,8 +14,9 @@ public static class TokenGenerator
         var claimsList = new List<Claim>()
             {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim(JwtRegisteredClaimNames.Sub, user.EntityId.ToString()),
-                new Claim(ClaimTypes.Role, user.Role.RoleName)
+
+                new Claim(ClaimTypes.Role, user.Role.RoleName),
+                new Claim(ClaimTypes.NameIdentifier, user.EntityId.ToString())
             };
         var tokenDescriptor = new SecurityTokenDescriptor
         {

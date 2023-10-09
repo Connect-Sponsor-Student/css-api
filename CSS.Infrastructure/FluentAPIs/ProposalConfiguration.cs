@@ -11,5 +11,8 @@ public class ProposalConfiguration : IEntityTypeConfiguration<Proposal>
         builder.HasOne(x => x.Student)
                 .WithMany(x => x.Proposals)
                 .HasForeignKey(x => x.StudentId);
+        builder.HasMany(x => x.ProposalFiles)
+                .WithOne(x => x.Proposal)
+                .HasForeignKey(x => x.ProposalId);
     }
 }

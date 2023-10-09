@@ -37,7 +37,7 @@ public class UserService : IUserService
                     Email = user.Email,
                     FullName = user.FullName
                 };
-                user.Id = student.Id;
+                user.EntityId = student.Id;
                 await _unitOfWork.StudentRepository.AddAsync(student);
                 break;
             case "Admin":

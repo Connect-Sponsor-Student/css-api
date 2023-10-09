@@ -6,16 +6,23 @@ public enum ServiceTypeEnum
     VVip = 2
 }
 
-public enum ProposalStateEnum 
+public enum ProposalStateEnum
 {
     KickOff,
     Challenge,
     Stable,
-    Improvement 
+    Improvement
 }
 
 public enum ProposalStatusEnum
 {
     Created,
     Approved
+}
+
+public enum RoleEnum
+{
+    Student,
+    Sponsor,
+    Admin
 }

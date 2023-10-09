@@ -19,6 +19,7 @@ public class AppDbContext : DbContext
     public DbSet<Sponsor> Sponsor { get; set; } = default!;
     public DbSet<FeedBack> FeedBack { get; set; } = default!;
     public DbSet<ProposalSponsor> ProposalSponsor { get; set; } = default!;
+    public DbSet<ProposalFile> ProposalFile { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
