@@ -65,7 +65,7 @@ public class UserService : IUserService
 
         }
 
-
+        
 
         return await _unitOfWork.SaveChangesAsync()
             ? _mapper.Map<UserViewModel>(await _unitOfWork.UserRepository.GetByIdAsync(user.Id, x => x.Role))

@@ -23,4 +23,11 @@ public class UsersController : BaseController
         var result = await _userService.UpdateAsync(model);
         return StatusCode(StatusCodes.Status204NoContent, result);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Get()
+    {
+        var result = await _userService.GetAllAsync();
+        return Ok(result.AsQueryable());
+    }
 }

@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Security;
 using AutoMapper;
+using AutoMapper.Configuration.Conventions;
 using CSS.Application.Services.Interfaces;
 using CSS.Application.Utilities.FireBaseUtilities;
 using CSS.Application.ViewModels.ProposalModels;
@@ -52,23 +53,36 @@ public class ProposalService : IProposalService
         else throw new Exception($"Oh Shjt, Its Exception");
     }
 
-    public Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var prop = await _unitOfWork.ProposalRepository.GetByIdAsync(id) ?? throw new Exception($"--> Error: Not Found Proposal With Id: {id}");
+        _unitOfWork.ProposalRepository.SoftRemove(prop);
+        var files = await _unitOfWork.ProposalFileRepository.FindListByField(x => x.ProposalId == prop.Id);
+        foreach(var file in files)
+        {
+            await file.Name.RemoveFileAsync();
+        }
+        _unitOfWork.ProposalFileRepository.SoftRemoveRange(files);
+        return await _unitOfWork.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<ProposalViewModel>> GetAllAsync()
+    public async Task<IEnumerable<ProposalViewModel>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return _mapper.Map<IEnumerable<ProposalViewModel>>(await _unitOfWork.ProposalRepository.GetAllAsync(x => x.ProposalFiles));
     }
 
-    public Task<ProposalViewModel> GetByIdAsync(Guid id)
+    public async Task<ProposalViewModel> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _unitOfWork.ProposalRepository.GetByIdAsync(id, x => x.ProposalFiles) ?? throw new Exception($"--> Error: Could Not Find Proposal with Id: {id}");
+        return _mapper.Map<ProposalViewModel>(result);
     }
 
-    public Task<ProposalViewModel> UpdateAsync(ProposalUpdateModel model)
+    public async Task<bool> UpdateAsync(ProposalUpdateModel model)
     {
-        throw new NotImplementedException();
+       var proposal = await _unitOfWork.ProposalRepository.GetByIdAsync(model.Id) ?? throw new Exception($"--> Error: Update Failed! Not Found Proposal with Id: {model.Id}");
+       _mapper.Map(model, proposal);
+       _unitOfWork.ProposalRepository.Update(proposal);
+       return await _unitOfWork.SaveChangesAsync();
+       
     }
 }

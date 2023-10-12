@@ -3,6 +3,7 @@ using CSS.Application.Services.Interfaces;
 using CSS.WebAPI.Middlewares;
 using CSS.WebAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.OData;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -17,7 +18,7 @@ public static class DependencyInjection
 
         services.AddHttpContextAccessor();
         services.AddScoped<GlobalExceptionMiddleware>();
-        services.AddControllers();
+        services.AddControllers().AddOData(opt => opt.Filter().Select().OrderBy().Count().Filter());
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(opt =>
             {

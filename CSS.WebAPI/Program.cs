@@ -11,6 +11,7 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOpti
 // Add services to the container.
 builder.Services.AddInfrastructureServices(builder.Configuration.GetConnectionString("DefaultConnection")!);
 builder.Services.AddWebAPIServices();
+
 builder.AddCSSAuthentication();
 
 var app = builder.Build();

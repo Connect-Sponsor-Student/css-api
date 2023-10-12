@@ -36,7 +36,8 @@ public static class DependencyInjection
         #region  DI Services 
         services.AddScoped<IUserService, UserService>()
                 .AddScoped<IRoleService, RoleService>()
-                .AddScoped<IProposalService, ProposalService>();
+                .AddScoped<IProposalService, ProposalService>()
+                .AddScoped<IFeedbackService, FeedbackService>();
         #endregion
         return services;
     }

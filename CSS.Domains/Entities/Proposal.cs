@@ -8,6 +8,8 @@ public class Proposal : BaseEntity
     public string Status { get; set; } = nameof(ProposalStatusEnum.Created);
     public string State { get; set; } = nameof(ProposalStateEnum.KickOff);
 
+    public double RequireAmount { get; set; } = default!;
+    public double ActualAmount { get; set; } = 0;
     public int ServiceType { get; set; } = (int)ServiceTypeEnum.Free;
     public Guid StudentId { get; set; } = default!;
     public Student Student { get; set; } = default!;
@@ -15,6 +17,7 @@ public class Proposal : BaseEntity
     public ICollection<ProposalService> ProposalServices { get; set; } = default!;
     public ICollection<ProposalSponsor> ProposalSponsors { get; set; } = default!;
     public ICollection<ProposalFile> ProposalFiles { get; set; } = default!;
+    public ICollection<Investment> Investments { get; set; } = default!;
 
 
 
