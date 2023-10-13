@@ -14,7 +14,7 @@ public class Proposal : BaseEntity
     public Guid StudentId { get; set; } = default!;
     public Student Student { get; set; } = default!;
     public ICollection<FeedBack> FeedBacks { get; set; } = default!;
-    public ICollection<ProposalService> ProposalServices { get; set; } = default!;
+    public ICollection<ProposalSupport> ProposalSupports{ get; set; } = default!;
     public ICollection<ProposalSponsor> ProposalSponsors { get; set; } = default!;
     public ICollection<ProposalFile> ProposalFiles { get; set; } = default!;
     public ICollection<Investment> Investments { get; set; } = default!;

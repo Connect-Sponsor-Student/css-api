@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.OData.Query;
 namespace CSS.WebAPI.Controllers;
 public class ServicesController : BaseController
 {
-    private readonly IServiceTypeService _serviceType;
-    public ServicesController(IServiceTypeService serviceType)
+    private readonly ISupportTypeService _serviceType;
+    public ServicesController(ISupportTypeService serviceType)
     {
         _serviceType = serviceType;
     }
@@ -22,7 +22,7 @@ public class ServicesController : BaseController
     } 
     [Authorize(Roles = nameof(RoleEnum.Admin))]
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ServiceCreateModel model)
+    public async Task<IActionResult> Post([FromBody] SupportTypeCreateModel model)
     {
         var result = await _serviceType.CreateAsync(model);
         if(result is not null)

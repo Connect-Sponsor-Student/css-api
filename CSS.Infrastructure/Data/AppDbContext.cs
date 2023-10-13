@@ -14,12 +14,13 @@ public class AppDbContext : DbContext
     public DbSet<Student> Student { get; set; } = default!;
     public DbSet<Proposal> Proposal { get; set; } = default!;
     public DbSet<Payment> Payment { get; set; } = default!;
-    public DbSet<Service> Service { get; set; } = default!;
-    public DbSet<ProposalService> ProposalService { get; set; } = default!;
+    public DbSet<SupportType> Service { get; set; } = default!;
+    public DbSet<ProposalSupport> ProposalService { get; set; } = default!;
     public DbSet<Sponsor> Sponsor { get; set; } = default!;
     public DbSet<FeedBack> FeedBack { get; set; } = default!;
     public DbSet<ProposalSponsor> ProposalSponsor { get; set; } = default!;
     public DbSet<ProposalFile> ProposalFile { get; set; } = default!;
+    public DbSet<Investment> Investment { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -5,6 +5,7 @@ using AutoMapper.Configuration.Conventions;
 using CSS.Application.Services.Interfaces;
 using CSS.Application.Utilities.FireBaseUtilities;
 using CSS.Application.ViewModels.ProposalModels;
+using CSS.Application.ViewModels.ProposalServiceModels;
 using CSS.Domains.Entities;
 using CSS.Domains.Enums;
 using Microsoft.AspNetCore.Http;
@@ -53,6 +54,8 @@ public class ProposalService : IProposalService
         else throw new Exception($"Oh Shjt, Its Exception");
     }
 
+
+
     public async Task<bool> DeleteAsync(Guid id)
     {
         var prop = await _unitOfWork.ProposalRepository.GetByIdAsync(id) ?? throw new Exception($"--> Error: Not Found Proposal With Id: {id}");
@@ -65,6 +68,8 @@ public class ProposalService : IProposalService
         _unitOfWork.ProposalFileRepository.SoftRemoveRange(files);
         return await _unitOfWork.SaveChangesAsync();
     }
+
+
 
     public async Task<IEnumerable<ProposalViewModel>> GetAllAsync()
     {

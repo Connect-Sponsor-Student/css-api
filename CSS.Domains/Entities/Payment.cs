@@ -6,6 +6,6 @@ public class Payment : BaseEntity
     public decimal Amount {get ;set;} = default!;
     public string Description {get ;set;} = default!;
     public bool State {get; set;}  =default!;
-    public Guid ProposalServiceId {get; set;} 
-    public ProposalService ProposalService {get; set;} = default!;
+    public Guid ProposalSupportId {get; set;} 
+    public ProposalSupport ProposalSupport {get; set;} = default!;
 }

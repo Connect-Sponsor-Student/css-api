@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CSS.Infrastructure.FluentAPIs;
-public class ServiceConfiguration : IEntityTypeConfiguration<Service>
+public class SupportTypeConfiguration : IEntityTypeConfiguration<SupportType>
 {
-    public void Configure(EntityTypeBuilder<Service> builder)
+    public void Configure(EntityTypeBuilder<SupportType> builder)
     {
         builder.HasKey(x => x.Id);
     }

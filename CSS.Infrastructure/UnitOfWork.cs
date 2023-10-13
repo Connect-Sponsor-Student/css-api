@@ -1,7 +1,6 @@
 using CSS.Application;
 using CSS.Application.Repositories;
 using CSS.Infrastructure.Data;
-using CSS.Infrastructure.Repositories;
 
 namespace CSS.Infrastructure;
 public class UnitOfWork : IUnitOfWork
@@ -11,28 +10,31 @@ public class UnitOfWork : IUnitOfWork
     private readonly IFeedBackRepository _feedBackRepository;
     private readonly IPaymentRepository payment;
     private readonly IProposalRepository proposalRepository;
-    private readonly IProposalServiceRespository proposalServiceRespository;
+    private readonly IProposalSupportRespository proposalSupportRespository;
     private readonly IProposalSponsorRepository proposalSponsorRepository;
     private readonly IRoleRepository roleRepository;
-    private readonly IServiceRepository serviceRepository;
+    private readonly ISupportTypeRepository supportTypeRepository;
     private readonly ISponsorRepository sponsorRepository;
     private readonly IStudentRepository studentRepository;
     private readonly IUserRepository userRepository;
     private readonly IProposalFileRepository _proposalFileRepository;
+    private readonly IInvestmentRepository _investmentRepository;
     public UnitOfWork(AppDbContext dbContext, IAdminRepository adminRepository, IFeedBackRepository feedBackRepositor
-    , IPaymentRepository paymentRepository, IProposalRepository proposalRepository, IProposalServiceRespository proposalServiceRespository
-    , IProposalSponsorRepository proposalSponsorRepository, IRoleRepository roleRepository, IServiceRepository serviceRepository
-    , ISponsorRepository sponsorRepository, IStudentRepository studentRepository, IUserRepository userRepository, IProposalFileRepository proposalFileRepository)
+    , IPaymentRepository paymentRepository, IProposalRepository proposalRepository, IProposalSupportRespository proposalSupportRespository
+    , IProposalSponsorRepository proposalSponsorRepository, IRoleRepository roleRepository, ISupportTypeRepository supportTypeRepository
+    , ISponsorRepository sponsorRepository, IStudentRepository studentRepository, IUserRepository userRepository, IProposalFileRepository proposalFileRepository
+    , IInvestmentRepository invesmentRepository)
     {
         _appDbContext = dbContext;
         _adminRepository = adminRepository;
         _feedBackRepository = feedBackRepositor;
+        _investmentRepository = invesmentRepository;
         payment = paymentRepository;
         this.proposalRepository = proposalRepository;
-        this.proposalServiceRespository = proposalServiceRespository;
+        this.proposalSupportRespository = proposalSupportRespository;
         this.proposalSponsorRepository = proposalSponsorRepository;
         this.roleRepository = roleRepository;
-        this.serviceRepository = serviceRepository;
+        this.supportTypeRepository = supportTypeRepository;
         this.sponsorRepository = sponsorRepository;
         this.studentRepository = studentRepository;
         this.userRepository = userRepository;
@@ -49,13 +51,13 @@ public class UnitOfWork : IUnitOfWork
 
     public IProposalRepository ProposalRepository => proposalRepository;
 
-    public IProposalServiceRespository ProposalServiceRespository => proposalServiceRespository;
+    public IProposalSupportRespository ProposalSupportRespository => proposalSupportRespository;
 
     public IProposalSponsorRepository ProposalSponsorRepository => proposalSponsorRepository;
 
     public IRoleRepository RoleRepository => roleRepository;
 
-    public IServiceRepository ServiceRepository => serviceRepository;
+    public ISupportTypeRepository SupportTypeRepository => supportTypeRepository;
 
     public ISponsorRepository SponsorRepository => sponsorRepository;
 
@@ -63,6 +65,7 @@ public class UnitOfWork : IUnitOfWork
 
     public IUserRepository UserRepository => userRepository;
     public IProposalFileRepository ProposalFileRepository => _proposalFileRepository;
+    public IInvestmentRepository InvestmentRepository  => _investmentRepository;
 
     public async Task<bool> SaveChangesAsync()
         => await _appDbContext.SaveChangesAsync() > 0;

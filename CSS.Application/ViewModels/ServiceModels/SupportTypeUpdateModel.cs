@@ -1,6 +1,6 @@
 using System.ComponentModel.Design;
 namespace CSS.Application.ViewModels.ServiceModels;
-public class ServiceUpdateModel : ServiceCreateModel
+public class SupportTypeUpdateModel : SupportTypeCreateModel
 {
     public Guid Id {get ;set;} = default!;
 }

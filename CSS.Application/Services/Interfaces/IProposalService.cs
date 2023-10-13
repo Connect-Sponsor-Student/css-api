@@ -1,4 +1,5 @@
 using CSS.Application.ViewModels.ProposalModels;
+using CSS.Application.ViewModels.ProposalServiceModels;
 
 namespace CSS.Application.Services.Interfaces;
 public interface IProposalService
@@ -8,4 +9,5 @@ public interface IProposalService
     Task<bool> UpdateAsync(ProposalUpdateModel model);
     Task<ProposalViewModel> GetByIdAsync(Guid id);
     Task<bool> DeleteAsync(Guid id);
+
 }

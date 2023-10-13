@@ -24,23 +24,28 @@ public static class DependencyInjection
                 .AddScoped<IFeedBackRepository, FeedBackRepository>()
                 .AddScoped<IPaymentRepository, PaymentRepository>()
                 .AddScoped<IProposalRepository, ProposalRepository>()
-                .AddScoped<IProposalServiceRespository, ProposalServiceRepository>()
+                .AddScoped<IProposalSupportRespository, ProposalSupportRepository>()
                 .AddScoped<IProposalSponsorRepository, ProposalSponsorRepository>()
                 .AddScoped<IRoleRepository, RoleRepository>()
-                .AddScoped<IServiceRepository, ServiceRepository>()
+                .AddScoped<ISupportTypeRepository, SupportTypeRepository>()
                 .AddScoped<ISponsorRepository, SponsorRepository>()
                 .AddScoped<IStudentRepository, StudentRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<IProposalFileRepository, ProposalFileRepository>();
+                .AddScoped<IProposalFileRepository, ProposalFileRepository>()
+                .AddScoped<IInvestmentRepository, InvestmentRepository>();
         #endregion
         #region  DI Services 
         services.AddScoped<IUserService, UserService>()
                 .AddScoped<IRoleService, RoleService>()
                 .AddScoped<IProposalService, ProposalService>()
-                .AddScoped<IFeedbackService, FeedbackService>();
+                .AddScoped<IFeedbackService, FeedbackService>()
+                .AddScoped<ISupportTypeService, SupportTypeService>()
+                .AddScoped<IProposalSupportService, ProposalSupportService>()
+                .AddScoped<IProposalSponsorService, ProposalSponsorService>()
+                .AddScoped<IInvestmentService, InvestmentService>();
         #endregion
         return services;
     }
 
-    
+
 }

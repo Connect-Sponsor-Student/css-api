@@ -1,5 +1,5 @@
 namespace CSS.Application.ViewModels.ServiceModels;
-public class ServiceCreateModel
+public class SupportTypeCreateModel
 {
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;

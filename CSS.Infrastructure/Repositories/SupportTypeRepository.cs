@@ -4,9 +4,9 @@ using CSS.Domains.Entities;
 using CSS.Infrastructure.Data;
 
 namespace CSS.Infrastructure.Repositories;
-public class ServiceRepository : GenericRepository<Service>, IServiceRepository
+public class SupportTypeRepository : GenericRepository<SupportType>, ISupportTypeRepository
 {
-    public ServiceRepository(AppDbContext dbContext, ICurrentTime currentTime, IClaimsService claimsService) 
+    public SupportTypeRepository(AppDbContext dbContext, ICurrentTime currentTime, IClaimsService claimsService) 
     : base(dbContext, currentTime, claimsService)
     {
         

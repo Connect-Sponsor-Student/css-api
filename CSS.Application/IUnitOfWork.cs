@@ -7,13 +7,14 @@ public interface IUnitOfWork
     public IFeedBackRepository FeedBackRepository { get; }
     public IPaymentRepository PaymentRepository { get; }
     public IProposalRepository ProposalRepository { get; }
-    public IProposalServiceRespository ProposalServiceRespository { get; }
+    public IProposalSupportRespository ProposalSupportRespository { get; }
     public IProposalSponsorRepository ProposalSponsorRepository { get; }
     public IRoleRepository RoleRepository { get; }
-    public IServiceRepository ServiceRepository { get; }
+    public ISupportTypeRepository SupportTypeRepository { get; }
     public ISponsorRepository SponsorRepository { get; }
     public IStudentRepository StudentRepository { get; }
     public IUserRepository UserRepository { get; }
     public IProposalFileRepository ProposalFileRepository { get; }
+    public IInvestmentRepository InvestmentRepository { get; }
     Task<bool> SaveChangesAsync();
 }
