@@ -9,5 +9,6 @@ public interface IProposalService
     Task<bool> UpdateAsync(ProposalUpdateModel model);
     Task<ProposalViewModel> GetByIdAsync(Guid id);
     Task<bool> DeleteAsync(Guid id);
+    Task CheckProposalDone();
 
 }

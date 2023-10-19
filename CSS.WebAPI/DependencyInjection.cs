@@ -2,6 +2,7 @@
 using CSS.Application.Services.Interfaces;
 using CSS.WebAPI.Middlewares;
 using CSS.WebAPI.Services;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.OData;
 using Microsoft.IdentityModel.Tokens;
@@ -15,9 +16,15 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWebAPIServices(this IServiceCollection services)
     {
+			services.AddHangfire(config => config
+			.UseSimpleAssemblyNameTypeSerializer()
+			.UseRecommendedSerializerSettings()
+			.UseInMemoryStorage());
+
         services.AddCors(options
                 => options.AddDefaultPolicy(policy
                     => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+			services.AddHangfireServer();
         services.AddHttpContextAccessor();
         services.AddScoped<GlobalExceptionMiddleware>();
         services.AddControllers().AddOData(opt => opt.Filter().Select().OrderBy().Count().Filter());

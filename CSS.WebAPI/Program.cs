@@ -1,8 +1,10 @@
+using CSS.Application.Services.Interfaces;
 using CSS.Application.Utilities.TokenUtilities;
 using CSS.Infrastructure;
 using CSS.Infrastructure.Data;
 using CSS.WebAPI;
 using CSS.WebAPI.Middlewares;
+using Hangfire;
 using CSS.WebAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,9 +28,11 @@ app.UseHttpsRedirection();
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseAuthorization();
+app.MapHangfireDashboard("/HangfireDashBoard");
 
 app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
+RecurringJob.AddOrUpdate<IProposalService>("Update Proposal Done", x => x.CheckProposalDone(), Cron.Hourly );
 app.Run();
 
 void ApplyMigration()
