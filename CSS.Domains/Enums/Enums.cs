@@ -17,7 +17,8 @@ public enum ProposalStateEnum
 public enum ProposalStatusEnum
 {
     Created,
-    Approved
+    Approved,
+    Done
 }
 
 public enum RoleEnum

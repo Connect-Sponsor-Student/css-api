@@ -22,6 +22,21 @@ public class ProposalService : IProposalService
         _claimsService = claimsServivce;
         _unitOfWork = unitOfWork;
     }
+
+    public async Task CheckProposalDone()
+    {
+        (await _unitOfWork.ProposalRepository.GetAllAsync()).ForEach(x => 
+        {
+            if(x.ActualAmount >= x.RequireAmount) 
+            {
+                
+                x.Status = nameof(ProposalStatusEnum.Done);
+                _unitOfWork.ProposalRepository.Update(x);
+            }
+        });
+        await _unitOfWork.SaveChangesAsync();
+    }
+
     public async Task<ProposalViewModel> CreateAsync(ProposalCreateModel model)
     {
 
