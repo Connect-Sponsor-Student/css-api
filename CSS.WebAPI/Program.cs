@@ -3,6 +3,7 @@ using CSS.Infrastructure;
 using CSS.Infrastructure.Data;
 using CSS.WebAPI;
 using CSS.WebAPI.Middlewares;
+using CSS.WebAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,19 +18,17 @@ builder.AddCSSAuthentication();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 ApplyMigration();
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapHub<ChatHub>("/chatHub");
 app.Run();
 
 void ApplyMigration()

@@ -15,7 +15,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWebAPIServices(this IServiceCollection services)
     {
-
+        services.AddCors(options
+                => options.AddDefaultPolicy(policy
+                    => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
         services.AddHttpContextAccessor();
         services.AddScoped<GlobalExceptionMiddleware>();
         services.AddControllers().AddOData(opt => opt.Filter().Select().OrderBy().Count().Filter());
@@ -51,6 +53,7 @@ public static class DependencyInjection
         services.AddScoped<ICurrentTime, CurrentTime>();
         services.AddScoped<IClaimsService, ClaimsService>();
         services.AddRouting(opt => opt.LowercaseUrls = true);
+        services.AddSignalR();
         return services;
     }
     public static WebApplicationBuilder AddCSSAuthentication(this WebApplicationBuilder builder)

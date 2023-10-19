@@ -33,32 +33,32 @@ public class UserService : IUserService
             case "Student":
                 var student = new Student
                 {
+                    Id=user.Id,
                     Address = user.Address,
                     Email = user.Email,
                     FullName = user.FullName
                 };
-                user.EntityId = student.Id;
                 await _unitOfWork.StudentRepository.AddAsync(student);
                 break;
             case "Admin":
                 var admin = new Admin
                 {
+                    Id = user.Id,
                     Name = user.FullName,
                     Email = user.Email,
                     IsBussinessAdmin = false,
                 };
-                user.EntityId = admin.Id;
                 await _unitOfWork.AdminRepository.AddAsync(admin);
                 break;
             case "Sponsor":
                 var sponsor = new Sponsor
                 {
+                    Id= user.Id,
                     Email = user.Email,
                     Address = user.Address,
                     Name = user.FullName
                 };
                 await _unitOfWork.SponsorRepository.AddAsync(sponsor);
-                user.EntityId = sponsor.Id;
                 break;
             default:
                 throw new Exception($"Role is not supported!");

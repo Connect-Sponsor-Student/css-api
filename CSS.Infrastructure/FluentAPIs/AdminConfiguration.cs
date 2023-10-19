@@ -9,6 +9,7 @@ namespace CSS.Infrastructure.FluentAPIs
         public void Configure(EntityTypeBuilder<Admin> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedNever();
         }
     }
 }

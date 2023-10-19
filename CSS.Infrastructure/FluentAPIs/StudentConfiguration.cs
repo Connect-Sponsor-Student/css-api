@@ -8,5 +8,6 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
     public void Configure(EntityTypeBuilder<Student> builder)
     {
         builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedNever();
     }
 }
