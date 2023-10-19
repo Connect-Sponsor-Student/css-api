@@ -32,7 +32,10 @@ public static class DependencyInjection
                 .AddScoped<IStudentRepository, StudentRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IProposalFileRepository, ProposalFileRepository>()
-                .AddScoped<IInvestmentRepository, InvestmentRepository>();
+                .AddScoped<IInvestmentRepository, InvestmentRepository>()
+                .AddScoped<IMessageRepository, MessageRepository>()
+                .AddScoped<IInboxRepository, InboxRepository>()
+                .AddScoped<IInboxParticipantRepository, InboxParticipantRepository>();
         #endregion
         #region  DI Services 
         services.AddScoped<IUserService, UserService>()
@@ -42,7 +45,9 @@ public static class DependencyInjection
                 .AddScoped<ISupportTypeService, SupportTypeService>()
                 .AddScoped<IProposalSupportService, ProposalSupportService>()
                 .AddScoped<IProposalSponsorService, ProposalSponsorService>()
-                .AddScoped<IInvestmentService, InvestmentService>();
+                .AddScoped<IInvestmentService, InvestmentService>()
+                .AddScoped<IMessageService, MessageService>()
+                .AddScoped<IInboxService, InboxService>();
         #endregion
         return services;
     }

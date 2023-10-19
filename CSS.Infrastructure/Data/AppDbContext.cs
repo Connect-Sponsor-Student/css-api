@@ -21,13 +21,16 @@ public class AppDbContext : DbContext
     public DbSet<ProposalSponsor> ProposalSponsor { get; set; } = default!;
     public DbSet<ProposalFile> ProposalFile { get; set; } = default!;
     public DbSet<Investment> Investment { get; set; } = default!;
+    public DbSet<Inbox> Inboxes { get; set; } = default!;
+    public DbSet<InboxParticipant> InboxParticipants { get; set; } = default!;
+    public DbSet<Message> Messages { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Role>().HasData
         (
-            new Role { RoleName = "Admin" }
+             new Role { RoleName = "Admin" }
             , new Role { RoleName = "Student" }
             , new Role { RoleName = "Sponsor" }
         );

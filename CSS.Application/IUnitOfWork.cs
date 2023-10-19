@@ -16,5 +16,9 @@ public interface IUnitOfWork
     public IUserRepository UserRepository { get; }
     public IProposalFileRepository ProposalFileRepository { get; }
     public IInvestmentRepository InvestmentRepository { get; }
+
+    public IMessageRepository MessageRepository { get; }
+    public IInboxParticipantRepository InboxParticipantRepository { get; }
+    public IInboxRepository InboxRepository { get; }
     Task<bool> SaveChangesAsync();
 }

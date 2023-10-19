@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\CSS.Domains\CSS.Domains.csproj"/>
+    <ProjectReference Include="..\CSS.Domains\CSS.Domains.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3"/>

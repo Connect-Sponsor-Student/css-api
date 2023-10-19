@@ -21,6 +21,9 @@ public static class DependencyInjection
 			.UseRecommendedSerializerSettings()
 			.UseInMemoryStorage());
 
+        services.AddCors(options
+                => options.AddDefaultPolicy(policy
+                    => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 			services.AddHangfireServer();
         services.AddHttpContextAccessor();
         services.AddScoped<GlobalExceptionMiddleware>();
@@ -57,6 +60,7 @@ public static class DependencyInjection
         services.AddScoped<ICurrentTime, CurrentTime>();
         services.AddScoped<IClaimsService, ClaimsService>();
         services.AddRouting(opt => opt.LowercaseUrls = true);
+        services.AddSignalR();
         return services;
     }
     public static WebApplicationBuilder AddCSSAuthentication(this WebApplicationBuilder builder)

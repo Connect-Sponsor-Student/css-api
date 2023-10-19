@@ -1,4 +1,5 @@
 using AutoMapper;
+using CSS.Application.ViewModels.MessageModels;
 using CSS.Application.ViewModels.ProposalFileModels;
 using CSS.Application.ViewModels.ProposalModels;
 using CSS.Application.ViewModels.ProposalServiceModels;
@@ -37,6 +38,13 @@ public class MapperConfigurationProfile : Profile
         CreateMap<ProposalSupport, ProposalSupportCreateModel>().ReverseMap();
         CreateMap<ProposalSupport, ProposalViewModel>().ReverseMap();
         CreateMap<ProposalSupport, ProposalSupportUpdateModel>().ReverseMap();
+        #endregion
+
+        #region Message
+        CreateMap<MessageReadModel,Message>()
+            .ForPath(x=>x.User.FullName,opt=>opt.MapFrom(x=>x.UserName))
+            .ReverseMap();
+        CreateMap<MessageCreateModel, Message>().ReverseMap();
         #endregion
     }
 }

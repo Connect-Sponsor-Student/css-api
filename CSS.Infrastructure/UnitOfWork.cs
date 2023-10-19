@@ -19,11 +19,19 @@ public class UnitOfWork : IUnitOfWork
     private readonly IUserRepository userRepository;
     private readonly IProposalFileRepository _proposalFileRepository;
     private readonly IInvestmentRepository _investmentRepository;
+
+    private readonly IInboxRepository _inboxRepository;
+    private readonly IInboxParticipantRepository _inboxParticipantRepository;
+    private readonly IMessageRepository _messageRepository;
+
     public UnitOfWork(AppDbContext dbContext, IAdminRepository adminRepository, IFeedBackRepository feedBackRepositor
     , IPaymentRepository paymentRepository, IProposalRepository proposalRepository, IProposalSupportRespository proposalSupportRespository
     , IProposalSponsorRepository proposalSponsorRepository, IRoleRepository roleRepository, ISupportTypeRepository supportTypeRepository
     , ISponsorRepository sponsorRepository, IStudentRepository studentRepository, IUserRepository userRepository, IProposalFileRepository proposalFileRepository
-    , IInvestmentRepository invesmentRepository)
+    , IInvestmentRepository invesmentRepository,
+        IInboxRepository inboxRepository,
+        IMessageRepository messageRepository,
+        IInboxParticipantRepository inboxParticipantRepository)
     {
         _appDbContext = dbContext;
         _adminRepository = adminRepository;
@@ -40,7 +48,9 @@ public class UnitOfWork : IUnitOfWork
         this.userRepository = userRepository;
         _proposalFileRepository = proposalFileRepository;
 
-
+        _inboxParticipantRepository = inboxParticipantRepository;
+        _messageRepository = messageRepository;
+        _inboxRepository = inboxRepository;
 
     }
     public IAdminRepository AdminRepository => _adminRepository;
@@ -66,6 +76,12 @@ public class UnitOfWork : IUnitOfWork
     public IUserRepository UserRepository => userRepository;
     public IProposalFileRepository ProposalFileRepository => _proposalFileRepository;
     public IInvestmentRepository InvestmentRepository  => _investmentRepository;
+
+    public IMessageRepository MessageRepository => _messageRepository;
+
+    public IInboxParticipantRepository InboxParticipantRepository => _inboxParticipantRepository;
+
+    public IInboxRepository InboxRepository => _inboxRepository;
 
     public async Task<bool> SaveChangesAsync()
         => await _appDbContext.SaveChangesAsync() > 0;

@@ -11,17 +11,14 @@
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10"/>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11"/>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11"/>
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.2.3"/>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.2.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSS.Infrastructure\CSS.Infrastructure.csproj"/>
-    <ProjectReference Include="..\CSS.Application\CSS.Application.csproj"/>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\"/>
+    <ProjectReference Include="..\CSS.Infrastructure\CSS.Infrastructure.csproj" />
+    <ProjectReference Include="..\CSS.Application\CSS.Application.csproj" />
   </ItemGroup>
 </Project>
