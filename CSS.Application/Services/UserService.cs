@@ -23,9 +23,9 @@ public class UserService : IUserService
         var user = _mapper.Map<User>(model);
         var isDup = (await _unitOfWork.UserRepository.GetAllAsync()).Any(x => x.Email == model.Email);
         if (isDup) throw new Exception($"Duplicate Email: {model.Email}");
-        await _unitOfWork.UserRepository.AddAsync(user);
-        user.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
+        user.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
+        await _unitOfWork.UserRepository.AddAsync(user);
         model.RoleId ??= (await _unitOfWork.RoleRepository.FindByField(x => x.RoleName == "Student")).Id;
         var role = await _unitOfWork.RoleRepository.GetByIdAsync(model.RoleId.Value);
         switch (role!.RoleName)
@@ -65,7 +65,7 @@ public class UserService : IUserService
 
         }
 
-        
+
 
         return await _unitOfWork.SaveChangesAsync()
             ? _mapper.Map<UserViewModel>(await _unitOfWork.UserRepository.GetByIdAsync(user.Id, x => x.Role))
