@@ -3,6 +3,7 @@ using System.Security;
 using AutoMapper;
 using AutoMapper.Configuration.Conventions;
 using CSS.Application.Services.Interfaces;
+using CSS.Application.Utilities.EmailUtilities;
 using CSS.Application.Utilities.FireBaseUtilities;
 using CSS.Application.ViewModels.ProposalModels;
 using CSS.Application.ViewModels.ProposalServiceModels;
@@ -16,20 +17,44 @@ public class ProposalService : IProposalService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IClaimsService _claimsService;
-    public ProposalService(IUnitOfWork unitOfWork, IClaimsService claimsServivce, IMapper mapper)
+    private readonly IEmailHelper _emailHelper;
+    public ProposalService(IUnitOfWork unitOfWork, IClaimsService claimsServivce, IMapper mapper, IEmailHelper emailHelper)
     {
         _mapper = mapper;
         _claimsService = claimsServivce;
+        _emailHelper = emailHelper;
         _unitOfWork = unitOfWork;
+    }
+
+    public async Task AssignSponsor(Guid proposalId, List<Guid> sponsorsId, string proposalLink)
+    {
+
+        var proposal =  await _unitOfWork.ProposalRepository.GetByIdAsync(proposalId);
+        
+        foreach (var sponsorId in sponsorsId)
+        {
+            var sponsor = await _unitOfWork.SponsorRepository.FindByField(x => x.Id == sponsorId);
+            string exePath = Environment.CurrentDirectory.ToString();
+            if (exePath.Contains(@"\bin\Debug\net7.0"))
+                exePath = exePath.Remove(exePath.Length - (@"\bin\Debug\net7.0").Length);
+            string FilePath = exePath + @"\EmailTemplates\AssignSponsorTemplate.html";
+            StreamReader streamreader = new StreamReader(FilePath);
+            string MailText = streamreader.ReadToEnd();
+            MailText.Replace("[proposalLink]", proposalLink);
+            MailText.Replace("[sponsorName]", sponsor.Name);
+            streamreader.Close();
+            await _emailHelper.SendEmailAsync(sponsor.Email, "Proposal Support Request", MailText);
+
+        }
     }
 
     public async Task CheckProposalDone()
     {
-        (await _unitOfWork.ProposalRepository.GetAllAsync()).ForEach(x => 
+        (await _unitOfWork.ProposalRepository.GetAllAsync()).ForEach(x =>
         {
-            if(x.ActualAmount >= x.RequireAmount) 
+            if (x.ActualAmount >= x.RequireAmount)
             {
-                
+
                 x.Status = nameof(ProposalStatusEnum.Done);
                 _unitOfWork.ProposalRepository.Update(x);
             }
@@ -64,7 +89,7 @@ public class ProposalService : IProposalService
         }
         proposal.StudentId = _claimsService.GetCurrentUser;
         await _unitOfWork.ProposalRepository.AddAsync(proposal);
-        if(await _unitOfWork.SaveChangesAsync())
+        if (await _unitOfWork.SaveChangesAsync())
             return _mapper.Map<ProposalViewModel>(await _unitOfWork.ProposalRepository.GetByIdAsync(proposal.Id, x => x.ProposalFiles));
         else throw new Exception($"Oh Shjt, Its Exception");
     }
@@ -76,7 +101,7 @@ public class ProposalService : IProposalService
         var prop = await _unitOfWork.ProposalRepository.GetByIdAsync(id) ?? throw new Exception($"--> Error: Not Found Proposal With Id: {id}");
         _unitOfWork.ProposalRepository.SoftRemove(prop);
         var files = await _unitOfWork.ProposalFileRepository.FindListByField(x => x.ProposalId == prop.Id);
-        foreach(var file in files)
+        foreach (var file in files)
         {
             await file.Name.RemoveFileAsync();
         }
@@ -99,10 +124,10 @@ public class ProposalService : IProposalService
 
     public async Task<bool> UpdateAsync(ProposalUpdateModel model)
     {
-       var proposal = await _unitOfWork.ProposalRepository.GetByIdAsync(model.Id) ?? throw new Exception($"--> Error: Update Failed! Not Found Proposal with Id: {model.Id}");
-       _mapper.Map(model, proposal);
-       _unitOfWork.ProposalRepository.Update(proposal);
-       return await _unitOfWork.SaveChangesAsync();
-       
+        var proposal = await _unitOfWork.ProposalRepository.GetByIdAsync(model.Id) ?? throw new Exception($"--> Error: Update Failed! Not Found Proposal with Id: {model.Id}");
+        _mapper.Map(model, proposal);
+        _unitOfWork.ProposalRepository.Update(proposal);
+        return await _unitOfWork.SaveChangesAsync();
+
     }
 }

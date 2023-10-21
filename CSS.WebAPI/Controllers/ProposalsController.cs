@@ -54,4 +54,11 @@ public class ProposalsController : BaseController
         if(result) return NoContent();
         else throw new Exception($"--> Error: Update Failed! ProposalId: {id}");
     }
+
+    [HttpPost("{id}")]
+    public async Task<IActionResult> AssignSponsor([FromRoute] Guid id, [FromForm] List<Guid> SponsorsId, [FromQuery] string proposalLink)
+    {
+        await _proposalService.AssignSponsor(id, SponsorsId, proposalLink);
+        return Ok();
+    }
 }

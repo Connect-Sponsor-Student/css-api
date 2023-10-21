@@ -26,6 +26,8 @@ public static class FireBaseHelper
             var fs = fileUpload.OpenReadStream();
             var auth = new FirebaseAuthProvider(new FirebaseConfig(API_KEY));
             var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+           
+            System.Console.WriteLine(a.FirebaseToken.ToString());
             var cancellation = new FirebaseStorage(
                 Bucket,
                 new FirebaseStorageOptions
