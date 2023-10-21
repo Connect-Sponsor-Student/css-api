@@ -33,7 +33,7 @@ public class UsersController : BaseController
     public async Task<IActionResult> Get()
     {
         var result = await _userService.GetAllAsync();
-        return Ok(result.AsQueryable());
+    return Ok(result.AsQueryable());
     }
 
     [HttpPut("{id}/reddem")]

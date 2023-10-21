@@ -6,6 +6,7 @@ using CSS.Application.ViewModels.ProposalServiceModels;
 using CSS.Application.ViewModels.ProposalSupportModels;
 using CSS.Application.ViewModels.RoleModels;
 using CSS.Application.ViewModels.ServiceModels;
+using CSS.Application.ViewModels.SponsorModels;
 using CSS.Application.ViewModels.UserModels;
 using CSS.Domains.Entities;
 
@@ -38,6 +39,9 @@ public class MapperConfigurationProfile : Profile
         CreateMap<ProposalSupport, ProposalSupportCreateModel>().ReverseMap();
         CreateMap<ProposalSupport, ProposalViewModel>().ReverseMap();
         CreateMap<ProposalSupport, ProposalSupportUpdateModel>().ReverseMap();
+        #endregion
+        #region Sponsor
+        CreateMap<Sponsor, SponsorViewModel>().ReverseMap();
         #endregion
 
         #region Message

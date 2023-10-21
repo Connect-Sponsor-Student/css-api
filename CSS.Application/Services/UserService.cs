@@ -134,6 +134,7 @@ public class UserService : IUserService
     public async Task<bool> ReddemCode(Guid userId, string code)
     {
         var user = await _unitOfWork.UserRepository.GetByIdAsync(userId) ?? throw new Exception($"Error: Not found User with Id: {userId}");
+        if(user.IsReddem) throw new Exception($"This user has reddem code already!");
         user.IsReddem = true;
         var userRefer = await _unitOfWork.UserRepository.FindByField(x => x.ReddemCode == code);
         userRefer.NumberRefer += 1;
