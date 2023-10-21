@@ -6,8 +6,10 @@ public class UserViewModel
 {
     public Guid Id { get; set; } = default!;
     public string FullName { get; set; } = default!;
-    public string Email {get; set;} = default!;
+    public string Email { get; set; } = default!;
+    public string ReddemCode { get; set; } = default!;
     public string Address { get; set; } = default!;
+    public int NumberRefer { get; set; } = 0;
 
     public RoleViewModel Role { get; set; } = default!;
 }

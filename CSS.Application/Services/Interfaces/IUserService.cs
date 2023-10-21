@@ -9,5 +9,7 @@ public interface IUserService
     Task<UserViewModel> GetByIdAsync(Guid id);
     Task<UserViewModel> UpdateAsync(UserUpdateModel model);
     Task<bool> DeleteAsync(Guid id);
+    Task<LoginReponseModel> LoginAsync(string email);
     Task<LoginReponseModel> LoginAsync(LoginRequestModel model);
+    Task<bool> ReddemCode(Guid userId ,string code);
 }

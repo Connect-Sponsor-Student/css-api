@@ -20,4 +20,12 @@ public class AuthController : BaseController
         var result = await _userService.LoginAsync(model) ?? throw new Exception($"Login Failed!"); 
         return Ok(result);
     }
+
+    [Route("firebase")]
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] string email)
+    {
+        var result = await _userService.LoginAsync(email) ?? throw new Exception($"Login Failed!");
+        return Ok(result);
+    } 
 }

@@ -10,5 +10,6 @@ public interface IProposalService
     Task<ProposalViewModel> GetByIdAsync(Guid id);
     Task<bool> DeleteAsync(Guid id);
     Task CheckProposalDone();
+    Task AssignSponsor(Guid proposalId, List<Guid> sponsorId, string proposalLink);
 
 }

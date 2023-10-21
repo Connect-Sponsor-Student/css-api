@@ -7,14 +7,16 @@ using CSS.WebAPI.Middlewares;
 using Hangfire;
 using CSS.WebAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using FirebaseAdmin.Auth;
+using CSS.Application.Utilities.EmailUtilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
+builder.Services.Configure<EmailConfig>(builder.Configuration.GetSection("EmailSetting"));
 // Add services to the container.
 builder.Services.AddInfrastructureServices(builder.Configuration.GetConnectionString("DefaultConnection")!);
 builder.Services.AddWebAPIServices();
-
 builder.AddCSSAuthentication();
 
 var app = builder.Build();

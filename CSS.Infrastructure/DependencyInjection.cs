@@ -3,6 +3,7 @@ using CSS.Application.Mappers;
 using CSS.Application.Repositories;
 using CSS.Application.Services;
 using CSS.Application.Services.Interfaces;
+using CSS.Application.Utilities.EmailUtilities;
 using CSS.Infrastructure.Data;
 using CSS.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ public static class DependencyInjection
         else*/
         services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(dbConnection));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IEmailHelper, EmailHelper>();
         services.AddAutoMapper(typeof(MapperConfigurationProfile).Assembly);
         #region  DI REPO
         services.AddScoped<IAdminRepository, AdminRepository>()
@@ -47,7 +49,8 @@ public static class DependencyInjection
                 .AddScoped<IProposalSponsorService, ProposalSponsorService>()
                 .AddScoped<IInvestmentService, InvestmentService>()
                 .AddScoped<IMessageService, MessageService>()
-                .AddScoped<IInboxService, InboxService>();
+                .AddScoped<IInboxService, InboxService>()
+                .AddScoped<ISponsorService, SponsorService>();
         #endregion
         return services;
     }

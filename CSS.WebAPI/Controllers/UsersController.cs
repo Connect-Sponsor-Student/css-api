@@ -1,14 +1,19 @@
 using CSS.Application.Services.Interfaces;
+using CSS.Application.Utilities.EmailUtilities;
 using CSS.Application.ViewModels.UserModels;
+using FirebaseAdmin;
+using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSS.WebAPI.Controllers;
 public class UsersController : BaseController
 {
     private readonly IUserService _userService;
-    public UsersController(IUserService userService)
+    private readonly IEmailHelper _emailHelper;
+    public UsersController(IUserService userService, IEmailHelper emailHelper)
     {
         _userService = userService;
+        _emailHelper = emailHelper;
     }
 
     [HttpPost]
@@ -30,4 +35,14 @@ public class UsersController : BaseController
         var result = await _userService.GetAllAsync();
         return Ok(result.AsQueryable());
     }
+
+    [HttpPut("{id}/reddem")]
+    public async Task<IActionResult> ReddemCode([FromRoute] Guid id, [FromQuery] string reddemCode)
+    {
+        await _userService.ReddemCode(id, reddemCode);
+        return NoContent();
+    }
+    
+
+   
 }
