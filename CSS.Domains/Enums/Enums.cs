@@ -17,7 +17,8 @@ public enum ProposalStateEnum
 public enum ProposalStatusEnum
 {
     Created,
-    Approved,
+    WaitingFeedback,
+    InProgress,
     Done
 }
 

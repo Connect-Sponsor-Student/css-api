@@ -3,6 +3,7 @@ using AutoMapper;
 using CSS.Application.Services.Interfaces;
 using CSS.Application.ViewModels.ProposalServiceModels;
 using CSS.Domains.Entities;
+using CSS.Domains.Enums;
 
 namespace CSS.Application.Services;
 public class ProposalSupportService : IProposalSupportService
@@ -17,10 +18,23 @@ public class ProposalSupportService : IProposalSupportService
     public async Task<ProposalSupportViewModel> CreateAsync(ProposalSupportCreateModel model, Guid proposalId)
     {
         var propSupport = _mapper.Map<ProposalSupport>(model);
+        var proposal = await _unitOfWork.ProposalRepository.GetByIdAsync(proposalId) ?? throw new Exception($"Not found proposal with Id: {proposalId}");
         propSupport.ProposalId = proposalId;
         await _unitOfWork.ProposalSupportRespository.AddAsync(propSupport);
         if (await _unitOfWork.SaveChangesAsync())
         {
+            var service = await _unitOfWork.SupportTypeRepository.GetByIdAsync(propSupport.SupportTypeId) ?? throw new Exception($"Not found Service Type with Id: {propSupport.SupportTypeId}");
+            if(service.Name == "AdminFeedback")
+            {
+                proposal.ServiceType = (int)ServiceTypeEnum.Vip;
+                proposal.Status = nameof(ProposalStatusEnum.WaitingFeedback); 
+            } else if(service.Name == "FullService")
+            {
+                proposal.ServiceType = (int)ServiceTypeEnum.VVip;
+                proposal.Status = nameof(ProposalStatusEnum.WaitingFeedback);
+            }
+            _unitOfWork.ProposalRepository.Update(proposal);
+            await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<ProposalSupportViewModel>(propSupport);
         }
         else

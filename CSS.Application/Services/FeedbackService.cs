@@ -23,10 +23,12 @@ public class FeedbackService : IFeedbackService
         var adminId = _claimsService.GetCurrentUser == Guid.Empty ? throw new Exception($"--> Error: Login User not have Id: {_claimsService.GetCurrentUser}")
         : _claimsService.GetCurrentUser;
         var admin = await _uniOfWork.AdminRepository.GetByIdAsync(adminId) ?? throw new Exception($"--> Error: Not found Admin with Id: {adminId}"); 
-        if(!admin.IsBussinessAdmin) throw new Exception($"--> Error: Admin doest not have permission to create feedback!");
+        //if(!admin.IsBussinessAdmin) throw new Exception($"--> Error: Admin doest not have permission to create feedback!");
         feedback.AdminId = admin.Id;
 
         var proposal = await _uniOfWork.ProposalRepository.GetByIdAsync(feedback.ProposalId) ?? throw new Exception($"--> Error: Not found Proposal with Id: {feedback.ProposalId}");
+        proposal.Status = nameof(ProposalStatusEnum.InProgress);
+        _uniOfWork.ProposalRepository.Update(proposal);
         if(proposal.ServiceType < (int) ServiceTypeEnum.Vip)
         {
             throw new Exception($"--> Error: ServiceType is FREE!");

@@ -126,8 +126,12 @@ public class ProposalService : IProposalService
     {
         var proposal = await _unitOfWork.ProposalRepository.GetByIdAsync(model.Id) ?? throw new Exception($"--> Error: Update Failed! Not Found Proposal with Id: {model.Id}");
         _mapper.Map(model, proposal);
+        
         _unitOfWork.ProposalRepository.Update(proposal);
+        
         return await _unitOfWork.SaveChangesAsync();
 
     }
+
+   
 }

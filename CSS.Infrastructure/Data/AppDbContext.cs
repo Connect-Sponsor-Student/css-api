@@ -34,6 +34,21 @@ public class AppDbContext : DbContext
             , new Role { RoleName = "Student" }
             , new Role { RoleName = "Sponsor" }
         );
+        modelBuilder.Entity<SupportType>().HasData
+        (
+            new SupportType 
+            {
+                Price = 150000,
+                Name = "FeedbackService",
+                Description = "Admin support"
+            },
+            new SupportType 
+            {
+                Price = 450000,
+                Name = "FullService",
+                Description = "Admin support, admin find potential and suitable sponsor for proposal"
+            }
+        );
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
 
