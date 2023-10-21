@@ -38,12 +38,11 @@ public class ProposalsController : BaseController
         return Ok(result);
     }
 
-    [Authorize(Roles = nameof(RoleEnum.Student))]
     [HttpPut]
     public async Task<IActionResult> Put([FromBody] ProposalUpdateModel model)
     {
         var result = await _proposalService.UpdateAsync(model);
-        return result ? throw new Exception($"--> Error: Update Proposal Failed! ProposalId: {model.Id}") 
+        return !result ? throw new Exception($"--> Error: Update Proposal Failed! ProposalId: {model.Id}") 
         : NoContent();
     }
 

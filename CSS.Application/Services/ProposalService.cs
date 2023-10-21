@@ -40,8 +40,8 @@ public class ProposalService : IProposalService
             string FilePath = exePath + @"\EmailTemplates\AssignSponsorTemplate.html";
             StreamReader streamreader = new StreamReader(FilePath);
             string MailText = streamreader.ReadToEnd();
-            MailText.Replace("[proposalLink]", proposalLink);
-            MailText.Replace("[sponsorName]", sponsor.Name);
+            MailText  = MailText.Replace("[proposalLink]", proposalLink);
+            MailText = MailText.Replace("[sponsorName]", sponsor.Name);
             streamreader.Close();
             await _emailHelper.SendEmailAsync(sponsor.Email, "Proposal Support Request", MailText);
 
@@ -126,8 +126,12 @@ public class ProposalService : IProposalService
     {
         var proposal = await _unitOfWork.ProposalRepository.GetByIdAsync(model.Id) ?? throw new Exception($"--> Error: Update Failed! Not Found Proposal with Id: {model.Id}");
         _mapper.Map(model, proposal);
+        
         _unitOfWork.ProposalRepository.Update(proposal);
+        
         return await _unitOfWork.SaveChangesAsync();
 
     }
+
+   
 }

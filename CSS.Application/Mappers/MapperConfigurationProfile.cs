@@ -1,11 +1,16 @@
 using AutoMapper;
+using CSS.Application.ViewModels.AdminModels;
+using CSS.Application.ViewModels.FeedbackModels;
+using CSS.Application.ViewModels.InvestmentModels;
 using CSS.Application.ViewModels.MessageModels;
 using CSS.Application.ViewModels.ProposalFileModels;
 using CSS.Application.ViewModels.ProposalModels;
 using CSS.Application.ViewModels.ProposalServiceModels;
+using CSS.Application.ViewModels.ProposalSponsorModels;
 using CSS.Application.ViewModels.ProposalSupportModels;
 using CSS.Application.ViewModels.RoleModels;
 using CSS.Application.ViewModels.ServiceModels;
+using CSS.Application.ViewModels.SponsorModels;
 using CSS.Application.ViewModels.UserModels;
 using CSS.Domains.Entities;
 
@@ -22,7 +27,7 @@ public class MapperConfigurationProfile : Profile
         CreateMap<UserCreateModel, User>().ReverseMap();
         CreateMap<UserUpdateModel, User>().ReverseMap();
         #endregion
-
+        CreateMap<AdminViewModel, Admin>().ReverseMap();
         #region ProposalMapping
         CreateMap<Proposal, ProposalCreateModel>().ReverseMap();
         CreateMap<Proposal, ProposalViewModel>().ReverseMap();
@@ -39,10 +44,28 @@ public class MapperConfigurationProfile : Profile
         CreateMap<ProposalSupport, ProposalViewModel>().ReverseMap();
         CreateMap<ProposalSupport, ProposalSupportUpdateModel>().ReverseMap();
         #endregion
+        #region Sponsor
+        CreateMap<Sponsor, SponsorViewModel>().ReverseMap();
+        #endregion
+        #region  Invesment
+        CreateMap<Investment, InvestmentCreateModel>().ReverseMap();
+        CreateMap<Investment, InvestmentViewModel>().ReverseMap();
 
+        #endregion
+
+        #region  Feedback 
+        CreateMap<FeedBack, FeedbackCreateModel>().ReverseMap();
+        CreateMap<FeedBack, FeeedbackUpdateModel>().ReverseMap();
+        CreateMap<FeedBack, FeedbackViewModel>().ReverseMap();
+        #endregion
+        #region  ProposalSponsor
+         CreateMap<ProposalSponsor, ProposalSponsorCreateModel>().ReverseMap();
+         CreateMap<ProposalSponsor, ProposalSponsorViewModel>().ReverseMap(); 
+        #endregion
+    
         #region Message
-        CreateMap<MessageReadModel,Message>()
-            .ForPath(x=>x.User.FullName,opt=>opt.MapFrom(x=>x.UserName))
+        CreateMap<MessageReadModel, Message>()
+            .ForPath(x => x.User.FullName, opt => opt.MapFrom(x => x.UserName))
             .ReverseMap();
         CreateMap<MessageCreateModel, Message>().ReverseMap();
         #endregion
