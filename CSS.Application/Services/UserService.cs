@@ -26,13 +26,15 @@ public class UserService : IUserService
         var user = _mapper.Map<Domains.Entities.User>(model);
         var isDup = (await _unitOfWork.UserRepository.GetAllAsync()).Any(x => x.Email == model.Email);
         if (isDup) throw new Exception($"Duplicate Email: {model.Email}");
-        user.ReddemCode = StringExtension.RandomString(9);
-        if (string.IsNullOrEmpty(user.Password))
+        if (model.isFireBaseAuthen.Equals("true"))
         {
+            user.Password = null;
+            user.ReddemCode = StringExtension.RandomString(9);
             user.IsFireBaseAuthen = true;
         }
         else
         {
+            user.ReddemCode = "Sponsor";
             user.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
         }
         if (model.RoleId == Guid.Empty)
