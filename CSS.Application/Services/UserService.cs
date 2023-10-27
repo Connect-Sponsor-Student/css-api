@@ -26,6 +26,7 @@ public class UserService : IUserService
         var user = _mapper.Map<Domains.Entities.User>(model);
         var isDup = (await _unitOfWork.UserRepository.GetAllAsync()).Any(x => x.Email == model.Email);
         if (isDup) throw new Exception($"Duplicate Email: {model.Email}");
+        user.Email = model.Email.ToLower();
         if (model.isFireBaseAuthen.Equals("true"))
         {
             user.Password = null;
@@ -97,6 +98,12 @@ public class UserService : IUserService
         var user = await _unitOfWork.UserRepository.GetByIdAsync(id) ?? throw new Exception($"Not found User with Id: {id}");
         _unitOfWork.UserRepository.SoftRemove(user);
         return await _unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task<bool> FindUserByEmail(string email)
+    {
+        var user = await _unitOfWork.UserRepository.FindByField(x => x.Email.Contains(email));
+        return user==null ? true:false;
     }
 
     public async Task<IEnumerable<UserViewModel>> GetAllAsync()

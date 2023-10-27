@@ -96,7 +96,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
            .Aggregate(_dbSet!.AsQueryable(),
                (entity, property) => entity!.Include(property)).AsNoTracking()
            .Where(expression!)
-            .FirstAsync(x => x.IsDeleted == false);
+            .FirstOrDefaultAsync(x => x.IsDeleted == false);
 
         public async Task<List<TEntity>> FindListByField(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
         => await includes
