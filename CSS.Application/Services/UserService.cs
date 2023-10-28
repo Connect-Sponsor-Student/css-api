@@ -27,7 +27,7 @@ public class UserService : IUserService
         var isDup = (await _unitOfWork.UserRepository.GetAllAsync()).Any(x => x.Email == model.Email);
         if (isDup) throw new Exception($"Duplicate Email: {model.Email}");
         user.Email = model.Email.ToLower();
-        if (model.isFireBaseAuthen.Equals("true"))
+        if (model.isFireBaseAuthen)
         {
             user.Password = null;
             user.ReddemCode = StringExtension.RandomString(9);
