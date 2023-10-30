@@ -102,7 +102,7 @@ public class UserService : IUserService
 
     public async Task<bool> FindUserByEmail(string email)
     {
-        var user = await _unitOfWork.UserRepository.FindByField(x => x.Email.Contains(email));
+        var user = await _unitOfWork.UserRepository.FindByField(x => x.Email.Equals(email));
         return user==null ? true:false;
     }
 
