@@ -102,8 +102,8 @@ public class UserService : IUserService
 
     public async Task<bool> FindUserByEmail(string email)
     {
-        var user = await _unitOfWork.UserRepository.FindByField(x => x.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
-        return user==null ? true:false;
+        var user = await _unitOfWork.UserRepository.FindListByField(x => x.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+        return user.Any() ? true:false;
     }
 
     public async Task<IEnumerable<UserViewModel>> GetAllAsync()
