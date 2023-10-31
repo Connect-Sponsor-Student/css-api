@@ -48,7 +48,8 @@ public class UsersController : BaseController
     public async Task<IActionResult>GetUserByEmail(string email)
     {
         var check= await _userService.FindUserByEmail(email);
-        return Ok(check);
+        if (check) return Ok(check);
+        return NoContent();
         
     }
 
