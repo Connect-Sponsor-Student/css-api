@@ -19,7 +19,10 @@ public class MapperConfigurationProfile : Profile
 {
     public MapperConfigurationProfile()
     {
-        CreateMap<RoleViewModel, Role>().ReverseMap();
+        CreateMap<RoleViewModel, Role>()
+            .ForMember(r => r.RoleName, r => r.MapFrom(src => src.RoleName))
+            .ForMember(r => r.Id, r => r.MapFrom(src => src.Id))
+            .ReverseMap();
         CreateMap<ProposalFile, ProposalFileViewModel>().ReverseMap();
 
         #region UserMapping

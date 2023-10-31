@@ -10,6 +10,6 @@ public class UserViewModel
     public string ReddemCode { get; set; } = default!;
     public string Address { get; set; } = default!;
     public int NumberRefer { get; set; } = 0;
-
+    public bool IsReddem { get; set; } 
     public RoleViewModel Role { get; set; } = default!;
 }
