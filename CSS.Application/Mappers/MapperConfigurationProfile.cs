@@ -43,9 +43,10 @@ public class MapperConfigurationProfile : Profile
         #endregion
 
         #region  ProposalSupport Mapping
-        CreateMap<ProposalSupportCreateModel,ProposalSupport>().ReverseMap();
-        CreateMap<ProposalViewModel,ProposalSupport>().ReverseMap();
-        CreateMap<ProposalSupportUpdateModel, ProposalSupport>().ReverseMap();
+
+        CreateMap<ProposalSupport, ProposalSupportCreateModel>().ReverseMap();
+        CreateMap<ProposalSupport, ProposalSupportViewModel>().ReverseMap();
+        CreateMap<ProposalSupport, ProposalSupportUpdateModel>().ReverseMap();
         #endregion
         #region Sponsor
         CreateMap<Sponsor, SponsorViewModel>().ReverseMap();
