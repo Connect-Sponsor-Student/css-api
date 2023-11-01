@@ -72,5 +72,12 @@ public class MapperConfigurationProfile : Profile
             .ReverseMap();
         CreateMap<MessageCreateModel, Message>().ReverseMap();
         #endregion
+
+        #region Services
+        CreateMap<SupportTypeCreateModel, SupportType>().ReverseMap();
+        CreateMap<SupportTypeUpdateModel, SupportType>().ReverseMap();
+        CreateMap<SupportTypeViewModel, SupportType>().ReverseMap();
+        #endregion
+
     }
 }
