@@ -9,6 +9,5 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     public UserRepository(AppDbContext dbContext, ICurrentTime currentTime, IClaimsService claimsService) 
     : base(dbContext, currentTime, claimsService)
     {
-        
     }
 }

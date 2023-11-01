@@ -19,7 +19,10 @@ public class MapperConfigurationProfile : Profile
 {
     public MapperConfigurationProfile()
     {
-        CreateMap<RoleViewModel, Role>().ReverseMap();
+        CreateMap<RoleViewModel, Role>()
+            .ForMember(r => r.RoleName, r => r.MapFrom(src => src.RoleName))
+            .ForMember(r => r.Id, r => r.MapFrom(src => src.Id))
+            .ReverseMap();
         CreateMap<ProposalFile, ProposalFileViewModel>().ReverseMap();
 
         #region UserMapping
@@ -40,6 +43,7 @@ public class MapperConfigurationProfile : Profile
         #endregion
 
         #region  ProposalSupport Mapping
+
         CreateMap<ProposalSupport, ProposalSupportCreateModel>().ReverseMap();
         CreateMap<ProposalSupport, ProposalSupportViewModel>().ReverseMap();
         CreateMap<ProposalSupport, ProposalSupportUpdateModel>().ReverseMap();
@@ -69,5 +73,12 @@ public class MapperConfigurationProfile : Profile
             .ReverseMap();
         CreateMap<MessageCreateModel, Message>().ReverseMap();
         #endregion
+
+        #region Services
+        CreateMap<SupportTypeCreateModel, SupportType>().ReverseMap();
+        CreateMap<SupportTypeUpdateModel, SupportType>().ReverseMap();
+        CreateMap<SupportTypeViewModel, SupportType>().ReverseMap();
+        #endregion
+
     }
 }

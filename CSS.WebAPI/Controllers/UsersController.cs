@@ -42,7 +42,16 @@ public class UsersController : BaseController
         await _userService.ReddemCode(id, reddemCode);
         return NoContent();
     }
-    
+
+   
+    [HttpGet("{email}")]    
+    public async Task<IActionResult>GetUserByEmail(string email)
+    {
+        var check= await _userService.FindUserByEmail(email);
+        if (check) return Ok(check);
+        return NoContent();
+        
+    }
 
    
 }

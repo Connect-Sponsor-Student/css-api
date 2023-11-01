@@ -26,13 +26,16 @@ public class UserService : IUserService
         var user = _mapper.Map<Domains.Entities.User>(model);
         var isDup = (await _unitOfWork.UserRepository.GetAllAsync()).Any(x => x.Email == model.Email);
         if (isDup) throw new Exception($"Duplicate Email: {model.Email}");
-        user.ReddemCode = StringExtension.RandomString(9);
-        if (string.IsNullOrEmpty(user.Password))
+        user.Email = model.Email.ToLower();
+        if (model.isFireBaseAuthen)
         {
+            user.Password = null;
+            user.ReddemCode = StringExtension.RandomString(9);
             user.IsFireBaseAuthen = true;
         }
         else
         {
+            user.ReddemCode = "Sponsor";
             user.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
         }
         if (model.RoleId == Guid.Empty)
@@ -95,6 +98,12 @@ public class UserService : IUserService
         var user = await _unitOfWork.UserRepository.GetByIdAsync(id) ?? throw new Exception($"Not found User with Id: {id}");
         _unitOfWork.UserRepository.SoftRemove(user);
         return await _unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task<bool> FindUserByEmail(string email)
+    {
+        var user = await _unitOfWork.UserRepository.FindByField(x => x.Email.Equals(email));
+        return user!=null ? true:false;
     }
 
     public async Task<IEnumerable<UserViewModel>> GetAllAsync()

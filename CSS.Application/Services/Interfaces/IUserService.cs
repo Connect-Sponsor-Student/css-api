@@ -12,4 +12,5 @@ public interface IUserService
     Task<LoginReponseModel> LoginAsync(string email);
     Task<LoginReponseModel> LoginAsync(LoginRequestModel model);
     Task<bool> ReddemCode(Guid userId ,string code);
+    Task<bool> FindUserByEmail(string email);
 }
