@@ -12,7 +12,7 @@ public class ProposalCreateModel
     public string ProposalType { get; set; } = default!;
     public string? Others { get; set; } = default!;
     public string Reason { get; set; } = default!;
-public string? MemberDescription { get; set; } = default!;
+    public string? MemberDescription { get; set; } = default!;
     public string EventPlace { get; set; } = default!;
     public DateTime StartedDate { get; set; } = default!;
     public string Approach { get; set; } = default!;
