@@ -605,22 +605,22 @@ namespace CSS.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2354e0b0-a613-4bf7-9b06-e26606fd110b"),
-                            CreationDate = new DateTime(2023, 10, 26, 12, 52, 56, 286, DateTimeKind.Local).AddTicks(5800),
+                            Id = new Guid("aeb20e9b-dfa0-46e3-a080-7ebd3b40eba2"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6418),
                             IsDeleted = false,
                             RoleName = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("b1faf5c9-331d-463f-83c4-e61519da1503"),
-                            CreationDate = new DateTime(2023, 10, 26, 12, 52, 56, 286, DateTimeKind.Local).AddTicks(5818),
+                            Id = new Guid("60349825-a083-4cc8-ace4-4e81c7d5550f"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6434),
                             IsDeleted = false,
                             RoleName = "Student"
                         },
                         new
                         {
-                            Id = new Guid("f2933713-46da-49ec-b95e-33118d7c34f8"),
-                            CreationDate = new DateTime(2023, 10, 26, 12, 52, 56, 286, DateTimeKind.Local).AddTicks(5819),
+                            Id = new Guid("0426c31d-c2fd-4b98-80c1-9824c56f96a6"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6435),
                             IsDeleted = false,
                             RoleName = "Sponsor"
                         });
@@ -763,8 +763,8 @@ namespace CSS.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2f1fa549-f0d1-4ba0-a0fd-38f19cc7b584"),
-                            CreationDate = new DateTime(2023, 10, 26, 12, 52, 56, 286, DateTimeKind.Local).AddTicks(5975),
+                            Id = new Guid("64cff31e-fcb2-4a2c-b010-f2387c69cb5d"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6621),
                             Description = "Admin support",
                             IsDeleted = false,
                             Name = "FeedbackService",
@@ -772,8 +772,8 @@ namespace CSS.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4beb8b2a-5885-4d74-92d2-67fd56746259"),
-                            CreationDate = new DateTime(2023, 10, 26, 12, 52, 56, 286, DateTimeKind.Local).AddTicks(5979),
+                            Id = new Guid("0904b3d9-5f43-4556-98c9-7ca5ccfb5b0c"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6624),
                             Description = "Admin support, admin find potential and suitable sponsor for proposal",
                             IsDeleted = false,
                             Name = "FullService",

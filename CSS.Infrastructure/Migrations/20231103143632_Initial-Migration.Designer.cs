@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSS.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231005163305_InitDBSchema_V1_05102023")]
-    partial class InitDBSchema_V1_05102023
+    [Migration("20231103143632_Initial-Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,6 @@ namespace CSS.Infrastructure.Migrations
             modelBuilder.Entity("CSS.Domains.Entities.Admin", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CreatedBy")
@@ -64,7 +63,6 @@ namespace CSS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -118,6 +116,178 @@ namespace CSS.Infrastructure.Migrations
                     b.ToTable("FeedBack");
                 });
 
+            modelBuilder.Entity("CSS.Domains.Entities.Inbox", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModificationBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Inboxes");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.InboxParticipant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("InboxId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModificationBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InboxId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("InboxParticipants");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.Investment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModificationBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ProposalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SponsorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProposalId");
+
+                    b.HasIndex("SponsorId");
+
+                    b.ToTable("Investment");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("InboxId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModificationBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InboxId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("CSS.Domains.Entities.Payment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -139,10 +309,6 @@ namespace CSS.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -152,7 +318,7 @@ namespace CSS.Infrastructure.Migrations
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProposalServiceId")
+                    b.Property<Guid>("ProposalSupportId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("State")
@@ -160,7 +326,7 @@ namespace CSS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProposalServiceId");
+                    b.HasIndex("ProposalSupportId");
 
                     b.ToTable("Payment");
                 });
@@ -170,6 +336,13 @@ namespace CSS.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("ActualAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Approach")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -187,8 +360,19 @@ namespace CSS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EventPlace")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("MemberDescription")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ModificationBy")
                         .HasColumnType("uniqueidentifier");
@@ -200,11 +384,36 @@ namespace CSS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Requirement")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("NumberParticipate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrganizationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Others")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProposalType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("RequireAmount")
+                        .HasColumnType("float");
 
                     b.Property<int>("ServiceType")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("StartedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -224,14 +433,11 @@ namespace CSS.Infrastructure.Migrations
                     b.ToTable("Proposal");
                 });
 
-            modelBuilder.Entity("CSS.Domains.Entities.ProposalService", b =>
+            modelBuilder.Entity("CSS.Domains.Entities.ProposalFile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -245,7 +451,7 @@ namespace CSS.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Extension")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -258,13 +464,14 @@ namespace CSS.Infrastructure.Migrations
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ProposalId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ServiceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("URL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -272,9 +479,7 @@ namespace CSS.Infrastructure.Migrations
 
                     b.HasIndex("ProposalId");
 
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("ProposalService");
+                    b.ToTable("ProposalFile");
                 });
 
             modelBuilder.Entity("CSS.Domains.Entities.ProposalSponsor", b =>
@@ -283,9 +488,6 @@ namespace CSS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -305,17 +507,11 @@ namespace CSS.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDone")
-                        .HasColumnType("bit");
-
                     b.Property<Guid?>("ModificationBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("Percentage")
-                        .HasColumnType("float");
 
                     b.Property<Guid>("ProposalId")
                         .HasColumnType("uniqueidentifier");
@@ -330,6 +526,48 @@ namespace CSS.Infrastructure.Migrations
                     b.HasIndex("SponsorId");
 
                     b.ToTable("ProposalSponsor");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.ProposalSupport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModificationBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ProposalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SupportTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProposalId");
+
+                    b.HasIndex("SupportTypeId");
+
+                    b.ToTable("ProposalService");
                 });
 
             modelBuilder.Entity("CSS.Domains.Entities.Role", b =>
@@ -366,52 +604,34 @@ namespace CSS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role");
-                });
 
-            modelBuilder.Entity("CSS.Domains.Entities.Service", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeleteBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ModificationBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModificationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Service");
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aeb20e9b-dfa0-46e3-a080-7ebd3b40eba2"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6418),
+                            IsDeleted = false,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("60349825-a083-4cc8-ace4-4e81c7d5550f"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6434),
+                            IsDeleted = false,
+                            RoleName = "Student"
+                        },
+                        new
+                        {
+                            Id = new Guid("0426c31d-c2fd-4b98-80c1-9824c56f96a6"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6435),
+                            IsDeleted = false,
+                            RoleName = "Sponsor"
+                        });
                 });
 
             modelBuilder.Entity("CSS.Domains.Entities.Sponsor", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
@@ -448,7 +668,6 @@ namespace CSS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -459,7 +678,6 @@ namespace CSS.Infrastructure.Migrations
             modelBuilder.Entity("CSS.Domains.Entities.Student", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
@@ -496,12 +714,74 @@ namespace CSS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StudentNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.SupportType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleteBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModificationBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Service");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("64cff31e-fcb2-4a2c-b010-f2387c69cb5d"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6621),
+                            Description = "Admin support",
+                            IsDeleted = false,
+                            Name = "FeedbackService",
+                            Price = 150000.0
+                        },
+                        new
+                        {
+                            Id = new Guid("0904b3d9-5f43-4556-98c9-7ca5ccfb5b0c"),
+                            CreationDate = new DateTime(2023, 11, 3, 21, 36, 32, 321, DateTimeKind.Local).AddTicks(6624),
+                            Description = "Admin support, admin find potential and suitable sponsor for proposal",
+                            IsDeleted = false,
+                            Name = "FullService",
+                            Price = 450000.0
+                        });
                 });
 
             modelBuilder.Entity("CSS.Domains.Entities.User", b =>
@@ -537,17 +817,34 @@ namespace CSS.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsFireBaseAuthen")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReddem")
+                        .HasColumnType("bit");
+
                     b.Property<Guid?>("ModificationBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NumberRefer")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReddemCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -575,15 +872,72 @@ namespace CSS.Infrastructure.Migrations
                     b.Navigation("Proposal");
                 });
 
-            modelBuilder.Entity("CSS.Domains.Entities.Payment", b =>
+            modelBuilder.Entity("CSS.Domains.Entities.InboxParticipant", b =>
                 {
-                    b.HasOne("CSS.Domains.Entities.ProposalService", "ProposalService")
-                        .WithMany("Payments")
-                        .HasForeignKey("ProposalServiceId")
+                    b.HasOne("CSS.Domains.Entities.Inbox", "Inbox")
+                        .WithMany("Participants")
+                        .HasForeignKey("InboxId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProposalService");
+                    b.HasOne("CSS.Domains.Entities.User", "User")
+                        .WithMany("InboxParticipants")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inbox");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.Investment", b =>
+                {
+                    b.HasOne("CSS.Domains.Entities.Proposal", "Proposal")
+                        .WithMany("Investments")
+                        .HasForeignKey("ProposalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CSS.Domains.Entities.Sponsor", "Sponsor")
+                        .WithMany("Investments")
+                        .HasForeignKey("SponsorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Proposal");
+
+                    b.Navigation("Sponsor");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.Message", b =>
+                {
+                    b.HasOne("CSS.Domains.Entities.Inbox", "Inbox")
+                        .WithMany("Messages")
+                        .HasForeignKey("InboxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CSS.Domains.Entities.User", "User")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inbox");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.Payment", b =>
+                {
+                    b.HasOne("CSS.Domains.Entities.ProposalSupport", "ProposalSupport")
+                        .WithMany("Payments")
+                        .HasForeignKey("ProposalSupportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProposalSupport");
                 });
 
             modelBuilder.Entity("CSS.Domains.Entities.Proposal", b =>
@@ -597,23 +951,15 @@ namespace CSS.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("CSS.Domains.Entities.ProposalService", b =>
+            modelBuilder.Entity("CSS.Domains.Entities.ProposalFile", b =>
                 {
                     b.HasOne("CSS.Domains.Entities.Proposal", "Proposal")
-                        .WithMany("ProposalServices")
+                        .WithMany("ProposalFiles")
                         .HasForeignKey("ProposalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CSS.Domains.Entities.Service", "Service")
-                        .WithMany("ProposalServices")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Proposal");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("CSS.Domains.Entities.ProposalSponsor", b =>
@@ -635,6 +981,25 @@ namespace CSS.Infrastructure.Migrations
                     b.Navigation("Sponsor");
                 });
 
+            modelBuilder.Entity("CSS.Domains.Entities.ProposalSupport", b =>
+                {
+                    b.HasOne("CSS.Domains.Entities.Proposal", "Proposal")
+                        .WithMany("ProposalSupports")
+                        .HasForeignKey("ProposalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CSS.Domains.Entities.SupportType", "SupportType")
+                        .WithMany("ProposalSupports")
+                        .HasForeignKey("SupportTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Proposal");
+
+                    b.Navigation("SupportType");
+                });
+
             modelBuilder.Entity("CSS.Domains.Entities.User", b =>
                 {
                     b.HasOne("CSS.Domains.Entities.Role", "Role")
@@ -651,16 +1016,27 @@ namespace CSS.Infrastructure.Migrations
                     b.Navigation("FeedBacks");
                 });
 
+            modelBuilder.Entity("CSS.Domains.Entities.Inbox", b =>
+                {
+                    b.Navigation("Messages");
+
+                    b.Navigation("Participants");
+                });
+
             modelBuilder.Entity("CSS.Domains.Entities.Proposal", b =>
                 {
                     b.Navigation("FeedBacks");
 
-                    b.Navigation("ProposalServices");
+                    b.Navigation("Investments");
+
+                    b.Navigation("ProposalFiles");
 
                     b.Navigation("ProposalSponsors");
+
+                    b.Navigation("ProposalSupports");
                 });
 
-            modelBuilder.Entity("CSS.Domains.Entities.ProposalService", b =>
+            modelBuilder.Entity("CSS.Domains.Entities.ProposalSupport", b =>
                 {
                     b.Navigation("Payments");
                 });
@@ -670,19 +1046,28 @@ namespace CSS.Infrastructure.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("CSS.Domains.Entities.Service", b =>
-                {
-                    b.Navigation("ProposalServices");
-                });
-
             modelBuilder.Entity("CSS.Domains.Entities.Sponsor", b =>
                 {
+                    b.Navigation("Investments");
+
                     b.Navigation("ProposalSponsors");
                 });
 
             modelBuilder.Entity("CSS.Domains.Entities.Student", b =>
                 {
                     b.Navigation("Proposals");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.SupportType", b =>
+                {
+                    b.Navigation("ProposalSupports");
+                });
+
+            modelBuilder.Entity("CSS.Domains.Entities.User", b =>
+                {
+                    b.Navigation("InboxParticipants");
+
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }
