@@ -107,7 +107,7 @@ public class UserService : IUserService
     }
 
     public async Task<IEnumerable<UserViewModel>> GetAllAsync()
-        => _mapper.Map<IEnumerable<UserViewModel>>(await _unitOfWork.UserRepository.GetAllAsync());
+        => _mapper.Map<IEnumerable<UserViewModel>>(await _unitOfWork.UserRepository.GetAllAsync(x => x.Role));
 
     public async Task<UserViewModel> GetByIdAsync(Guid id)
         => _mapper.Map<UserViewModel>(await _unitOfWork.UserRepository.GetByIdAsync(id, x => x.Role));

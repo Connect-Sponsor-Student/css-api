@@ -4,6 +4,7 @@ using CSS.Application.Services.Interfaces;
 using CSS.Application.ViewModels.ProposalServiceModels;
 using CSS.Domains.Entities;
 using CSS.Domains.Enums;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace CSS.Application.Services;
 public class ProposalSupportService : IProposalSupportService
@@ -58,6 +59,6 @@ public class ProposalSupportService : IProposalSupportService
 
     public async Task<IEnumerable<ProposalSupportViewModel>> GetByProposalAsync(Guid proposalId)
     {
-        return _mapper.Map<IEnumerable<ProposalSupportViewModel>>(await _unitOfWork.ProposalSupportRespository.FindListByField(x => x.ProposalId == proposalId, x => x.SupportType));
+        return _mapper.Map<IEnumerable<ProposalSupportViewModel>>(await _unitOfWork.ProposalSupportRespository.FindListByField(x => x.ProposalId == proposalId, x => x.SupportType, x => x.Proposal));
     }
 }
