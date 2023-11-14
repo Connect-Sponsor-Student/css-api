@@ -25,7 +25,7 @@ public class ProposalSupportService : IProposalSupportService
         if (await _unitOfWork.SaveChangesAsync())
         {
             var service = await _unitOfWork.SupportTypeRepository.GetByIdAsync(propSupport.SupportTypeId) ?? throw new Exception($"Not found Service Type with Id: {propSupport.SupportTypeId}");
-            if(service.Name == "AdminFeedback")
+            if(service.Name == "FeedbackService")
             {
                 proposal.ServiceType = (int)ServiceTypeEnum.Vip;
                 proposal.Status = nameof(ProposalStatusEnum.WaitingFeedback); 
